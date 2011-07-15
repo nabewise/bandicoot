@@ -33,14 +33,19 @@ module Bandicoot
     protected
     def self.read_save_points(file)
       hash = SavePointHash.new
-      MessagePack::Unpacker.new(file).each do |key, retval|
-        c = hash
-        key.each do |x|
-          c[x] ||= SavePointHash.new
-          c = c[x]
+      begin
+        MessagePack::Unpacker.new(file).each do |key, retval|
+          c = hash
+          key.each do |x|
+            c[x] ||= SavePointHash.new
+            c = c[x]
+          end
+          c.complete = true
+          c.ret_val = retval
         end
-        c.complete = true
-        c.ret_val = retval
+      rescue EOFError
+        #nop, of course exceptions should be used for flow control
+        # silly me to think otherwise.
       end
       p hash
       hash
