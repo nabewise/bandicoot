@@ -11,6 +11,7 @@ module Bandicoot
     begin
       yield
     ensure
+      puts "[BANDICOOT] closing"
       Bandicoot.current.save_file.close
       Bandicoot.pop_context
     end
