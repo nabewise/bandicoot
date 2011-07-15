@@ -22,9 +22,8 @@ module Bandicoot
 
     def write(key, retval)
       puts "[BANDICOOT] writing [#{key.inspect}, #{retval.inspect}]"
-      #file.write([key, retval].to_msgpack)
-      file.write([key, retval].to_json)
-      p file.fsync
+      file.write([key, retval].to_msgpack)
+      file.fsync
     end
 
     def close
